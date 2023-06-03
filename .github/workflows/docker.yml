@@ -23,7 +23,7 @@ jobs:
 
       - name: Run Docker container
         run: |
-          docker run -v $PWD/lig:/in -v $PWD/out:/out nerdfonts/patcher -c || exit 0
+          docker run -v $PWD/lig:/in -v $PWD/out:/out nerdfonts/patcher -c || true
 
       - name: Bundle
         run: |
