@@ -5,7 +5,7 @@ on:
     branches:
       - main
   schedule:
-    - cron: '0 0 1 * *'
+    - cron: "0 0 * * *"
   pull_request:
     branches: [main]
 
@@ -34,7 +34,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: nightly
-          name: 'Release $$'
+          name: "Release $$"
           prerelease: false
           files: |
             lig.zip
