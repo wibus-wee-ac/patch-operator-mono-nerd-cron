@@ -5,7 +5,7 @@ on:
     branches:
       - main
   schedule:
-    - cron: "0 0 * * *"
+    - cron: '0 0 * * *'
   pull_request:
     branches: [main]
 
@@ -23,18 +23,21 @@ jobs:
 
       - name: Run Docker container
         run: |
-          docker run -v $PWD/lig:/in -v $PWD/out:/out nerdfonts/patcher -c || true
+          docker compose run --rm operator-mono-lig
+          docker run -v $PWD/build:/in -v $PWD/out:/out nerdfonts/patcher -c || true
 
       - name: Bundle
         run: |
-          zip -r lig.zip out
+          zip -r with-nerd-fonts.zip out
+          zip -r only-lig.zip build
       - name: Update Nightly Release
         uses: andelf/nightly-release@main
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: nightly
-          name: "Release $$"
+          name: 'Release $$'
           prerelease: false
           files: |
-            lig.zip
+            only-lig.zip
+            with-nerd-fonts.zip
